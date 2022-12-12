@@ -13,6 +13,7 @@ class NewCompany extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $mailData;
     /**
      * Create a new message instance.
      *
@@ -43,7 +44,7 @@ class NewCompany extends Mailable
     public function content()
     {
         return new Content(
-            view: 'view.name',
+            view: 'email.test',
         );
     }
 

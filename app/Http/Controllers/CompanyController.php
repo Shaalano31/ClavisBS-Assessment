@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Mail\NewCompany;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CompanyController extends Controller
 {
@@ -33,6 +35,13 @@ class CompanyController extends Controller
         }
 
         Company::create($formFields);
+
+        $mailData = [
+            'name' => $request->name,
+            'website' => $request->website
+        ];
+
+        Mail::to('khaled.shaalan.031@gmail.com')->send(new NewCompany($mailData));
 
         return redirect('/companies');
     }
