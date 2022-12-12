@@ -88,12 +88,12 @@
     
                                 <a href="/companies" class="text-black ml-4"> Back </a>
 
-                                <form method="POST" action="/companies/{{$company->id}}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="text-red-500"><i class="fa-solid fa-trash"></i> Delete </button>
-                                </form>
                             </div>
+                        </form>
+                        <form method="POST" action="/companies/{{$company->id}}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="text-red-500"><i class="fa-solid fa-trash"></i> Delete </button>
                         </form>
         </x-card>
     </x-layout>

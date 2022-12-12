@@ -19,20 +19,23 @@ Route::get('/', function () {
 });
 
 
-// Show all Companies
-Route::get('/companies', [CompanyController::class, "index"]);
+Route::controller(CompanyController::class)->group(function() {
 
-// Show Create Form
-Route::get('/companies/create', [CompanyController::class, "create"]);
+    // Show all Companies
+    Route::get('/companies', "index");
 
-// Store Company Data
-Route::post('/companies/store', [CompanyController::class, "store"]);
+    // Show Create Form
+    Route::get('/companies/create', "create");
 
-// Show Edit Form
-Route::get('/companies/{company}/edit', [CompanyController::class, "edit"]);
+    // Store Company Data
+    Route::post('/companies/store', "store");
 
-// Update Company
-Route::put("/companies/{company}", [CompanyController::class, "update"]);
+    // Show Edit Form
+    Route::get('/companies/{company}/edit', "edit");
 
-// Delete Company
-Route::delete("/companies/{company}", [CompanyController::class, "destroy"]);
+    // Update Company
+    Route::put("/companies/{company}", "update");
+
+    // Delete Company
+    Route::delete("/companies/{company}", "destroy");
+});

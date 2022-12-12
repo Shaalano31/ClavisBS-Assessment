@@ -31,7 +31,7 @@ class CompanyController extends Controller
         ]);
 
         if($request->hasFile('logo')) {
-            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+            $formFields['logo'] = $request->file('logo')->store('', 'public');
         }
 
         Company::create($formFields);
@@ -61,7 +61,7 @@ class CompanyController extends Controller
         ]);
 
         if($request->hasFile('logo')) {
-            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+            $formFields['logo'] = $request->file('logo')->store('', 'public');
         }
 
         $company->update($formFields);
