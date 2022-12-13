@@ -17,21 +17,60 @@ class UserController extends Controller
 
     // Show Create Form
     public function create() {
-        return view('users.create');
+        return view('users.register');
     }
 
+    
     // Store User detail
     public function store(Request $request, StoreUser $validate) {
-
+        
         $formFields = $validate->all();
-
+        
         if($request->hasFile('profile_picture')) {
             $formFields['profile_picture'] = $request->file('profile_picture')->store('', 'public');
         }
-
-        User::create($formFields);
-
+        
+        // Hashing
+        $formFields['password'] = bcrypt($formFields['password']);
+        
+        $user = User::create($formFields);
+        
+        auth()->login($user);
+        
         return redirect('/users');
+    }
+    
+    // Show Register Form
+    public function login() {
+        return view('users.login');
+    }
+
+    // Logout
+    public function logout(Request $request)
+    {
+        auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/users')->with('message', 'Logged Out');
+    }
+
+    // Authenticate User
+    public function authenticate(Request $request)
+    {
+        $formFields = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required']
+        ]);
+
+        if(auth()->attempt($formFields)) {
+            $request->session()->regenerate();
+
+            return redirect('/users')->with('message', 'Login success');
+        }
+
+        return back()->withErrors(['email' => "Invalid Credentials"])->onlyInput('email');
     }
 
     // Show Edit Form
@@ -42,6 +81,7 @@ class UserController extends Controller
     // Update Listing Data
     public function update(Request $request, User $user, StoreUser $validate) {
 
+        dd($request);
         $formFields = $validate->all();
 
         if($request->hasFile('profile_picture')) {
@@ -54,7 +94,12 @@ class UserController extends Controller
     }
 
     // Delete Employee
-    public function destroy(User $user) {
+    public function destroy(Request $request, User $user) {
+
+        auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         $user->delete();
         return redirect('/users');

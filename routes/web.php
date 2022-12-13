@@ -68,18 +68,27 @@ Route::controller(UserController::class)->group(function() {
     // Show all Users
     Route::get('/users', "index");
 
-    // Show Create Form
-    Route::get('/users/create', "create");
+    // Show Register Form
+    Route::get('/register', "create");
 
-    // Store user Data
-    Route::post('/users/store', "store");
+    // Create new user
+    Route::post('/users', "store");
+
+    // Show Login Form
+    Route::get('/login', 'login');
+
+    // Logout User
+    Route::post("/logout", 'logout')->middleware('auth');
+
+    // Login User
+    Route::post("/users/authenticate", 'authenticate');
 
     // Show Edit Form
-    Route::get('/users/{user}/edit', "edit");
+    Route::get('/users/{user}/edit', "edit")->middleware('auth');
 
     // Update user
     Route::put("/users/{user}", "update");
 
     // Delete user
-    Route::delete("/users/{user}", "destroy");
+    Route::delete("/users/{user}", "destroy")->middleware('auth');
 });

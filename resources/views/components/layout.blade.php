@@ -36,14 +36,14 @@
                 @auth
                 <li>
                     <span class ="font-bold uppercase">
-                        Welcome {{auth()->user()->name}}
+                        Welcome {{auth()->user()->username}}
                     </span>
 
                 </li>
                 <li>
-                    <a href="/listings/manage" class="hover:text-laravel"
+                    <a href="/users/{{auth()->user()->id}}/edit" class="hover:text-laravel"
                         ><i class="fa-solid fa-gear-right-to-bracket"></i>
-                        Manage Listings</a
+                        User Profile</a
                     >
                 </li>
                 <li>
