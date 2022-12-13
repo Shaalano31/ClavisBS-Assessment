@@ -33,6 +33,24 @@
                 ><img class="w-24" src="{{asset('images/logo.png')}}" alt="" class="logo"
             /></a>
             <ul class="flex space-x-6 mr-6 text-lg">
+                <li>
+                    <a href="/users" class="hover:text-laravel"
+                        ><i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        Users</a
+                    >
+                </li>
+                <li>
+                    <a href="/employees" class="hover:text-laravel"
+                        ><i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        Employess</a
+                    >
+                </li>
+                <li>
+                    <a href="/companies" class="hover:text-laravel"
+                        ><i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        Companies</a
+                    >
+                </li>
                 @auth
                 <li>
                     <span class ="font-bold uppercase">
