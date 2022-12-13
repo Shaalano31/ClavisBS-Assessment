@@ -19,22 +19,16 @@ class Employee extends Model
 
     public function getFirstNameAttribute($value)
     {
-        return strtoupper($value);
+        return Self::getFullNameAttribute($value);
     }
 
     public function getLastNameAttribute($value)
     {
-        return strtoupper($value);
+        return Self::getFullNameAttribute($value);
     }
 
-    // static public function getFullNameAttribute() {
+    public static function getFullNameAttribute($value) {
 
-    //     $employees = Employee::latest()->get();
-
-    //     foreach ($employees as $employee) {
-    //         $employee['full_name'] = $employee->first_name . $employee->last_name;
-    //     }
-
-    //     return $employees;
-    // }
+        return strtoupper($value);
+    }
 }
