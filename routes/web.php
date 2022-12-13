@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +40,46 @@ Route::controller(CompanyController::class)->group(function() {
 
     // Delete Company
     Route::delete("/companies/{company}", "destroy");
+});
+
+Route::controller(EmployeeController::class)->group(function() {
+
+    // Show all Employees
+    Route::get('/employees', "index");
+
+    // Show Create Form
+    Route::get('/employees/create', "create");
+
+    // Store employee Data
+    Route::post('/employees/store', "store");
+
+    // Show Edit Form
+    Route::get('/employees/{employee}/edit', "edit");
+
+    // Update Employee
+    Route::put("/employees/{employee}", "update");
+
+    // Delete Employee
+    Route::delete("/employees/{employee}", "destroy");
+});
+
+Route::controller(UserController::class)->group(function() {
+
+    // Show all Users
+    Route::get('/users', "index");
+
+    // Show Create Form
+    Route::get('/users/create', "create");
+
+    // Store user Data
+    Route::post('/users/store', "store");
+
+    // Show Edit Form
+    Route::get('/users/{user}/edit', "edit");
+
+    // Update user
+    Route::put("/users/{user}", "update");
+
+    // Delete user
+    Route::delete("/users/{user}", "destroy");
 });

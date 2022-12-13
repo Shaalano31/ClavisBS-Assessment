@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCompany;
 use App\Models\Company;
 use App\Mail\NewCompany;
 use Illuminate\Http\Request;
@@ -22,13 +23,9 @@ class CompanyController extends Controller
     }
 
     // Store Company detail
-    public function store(Request $request) {
+    public function store(Request $request, StoreCompany $validate) {
 
-        $formFields = $request->validate([
-            'name' => 'required',
-            'email' => ['required', 'email'],
-            'website' => 'required'
-        ]);
+        $formFields = $validate->all();
 
         if($request->hasFile('logo')) {
             $formFields['logo'] = $request->file('logo')->store('', 'public');
@@ -52,13 +49,9 @@ class CompanyController extends Controller
     }
 
     // Update Listing Data
-    public function update(Request $request, Company $company) {
+    public function update(Request $request, Company $company, StoreCompany $validate) {
 
-        $formFields = $request->validate([
-            'name' => 'required',
-            'email' => ['required', 'email'],
-            'website' => 'required'
-        ]);
+        $formFields = $validate->all();
 
         if($request->hasFile('logo')) {
             $formFields['logo'] = $request->file('logo')->store('', 'public');
