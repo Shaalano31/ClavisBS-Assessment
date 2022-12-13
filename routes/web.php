@@ -66,7 +66,7 @@ Route::controller(EmployeeController::class)->group(function() {
 Route::controller(UserController::class)->group(function() {
 
     // Show all Users
-    Route::get('/users', "index");
+    Route::get('/users', "index");// ->middleware('auth:sanctum');
 
     // Show Register Form
     Route::get('/register', "create");

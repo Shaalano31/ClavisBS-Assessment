@@ -2,18 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCompany;
 use App\Models\Company;
 use App\Mail\NewCompany;
 use Illuminate\Http\Request;
+use App\Services\CompanyService;
+use App\Http\Requests\StoreCompany;
 use Illuminate\Support\Facades\Mail;
 
 class CompanyController extends Controller
 {
+
+    protected $companyService;
+
+    // Constructor
+    public function __construct(CompanyService $companyService) {
+        $this->companyService = $companyService;
+    }
+    
     // Show all companies
     public function index() {
         return view('companies.index', [
-            'companies' => Company::latest()->get()
+            'companies' => $this->companyService->getAll()
         ]);
     }
 
@@ -25,20 +34,7 @@ class CompanyController extends Controller
     // Store Company detail
     public function store(Request $request, StoreCompany $validate) {
 
-        $formFields = $validate->all();
-
-        if($request->hasFile('logo')) {
-            $formFields['logo'] = $request->file('logo')->store('', 'public');
-        }
-
-        Company::create($formFields);
-
-        $mailData = [
-            'name' => $request->name,
-            'website' => $request->website
-        ];
-
-        Mail::to('khaled.shaalan.031@gmail.com')->send(new NewCompany($mailData));
+        $this->companyService->store($request, $validate);
 
         return redirect('/companies');
     }
@@ -51,13 +47,7 @@ class CompanyController extends Controller
     // Update Listing Data
     public function update(Request $request, Company $company, StoreCompany $validate) {
 
-        $formFields = $validate->all();
-
-        if($request->hasFile('logo')) {
-            $formFields['logo'] = $request->file('logo')->store('', 'public');
-        }
-
-        $company->update($formFields);
+        $this->companyService->update($request, $company, $validate);
 
         return redirect('/companies');
     }
@@ -65,7 +55,8 @@ class CompanyController extends Controller
     // Delete Company
     public function destroy(Company $company) {
 
-        $company->delete();
+        $this->companyService->delete($company);
+
         return redirect('/companies');
     }
 }

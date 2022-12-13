@@ -59,6 +59,7 @@ class UserController extends Controller
     // Authenticate User
     public function authenticate(Request $request)
     {
+        // return response()->json(['message' => 'logged in successfully'], 200);
         $formFields = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required']
@@ -66,7 +67,9 @@ class UserController extends Controller
 
         if(auth()->attempt($formFields)) {
             $request->session()->regenerate();
-
+            $token = $request->user()->createToken($request->email);
+    
+            // return ['token' => $token->plainTextToken];
             return redirect('/users')->with('message', 'Login success');
         }
 

@@ -10,7 +10,7 @@ class EmployeeController extends Controller
 {
     // Show all employees
     public function index() {
-        return view('employees.index', [
+        return view('employees.index' ,[
             'employees' => Employee::latest()->get()
         ]);
     }
